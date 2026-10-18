@@ -29,6 +29,35 @@ let footprint9 = document.getElementById('footprint9');
 let footprint10 = document.getElementById('footprint10');
 let footprint11 = document.getElementById('footprint11');
 
+// Set to false to start on the left foot: footprints swap sides and each foot
+// is mirrored. The number mesh is left unmirrored so it still reads correctly.
+const startRightFoot = true;
+
+AFRAME.registerComponent('footprint', {
+  schema: { number: { type: 'int' } },
+  init: function () {
+    if (startRightFoot) return;
+    const el = this.el;
+    el.object3D.position.x *= -1;
+    el.addEventListener('model-loaded', () => {
+      const model = el.getObject3D('mesh');
+      const numberMesh = model.children.find((node) => node.name.startsWith('Text'));
+      if (!numberMesh) return;
+
+      // mirror everything except the number across the number's x position,
+      // so the number keeps its place on the foot
+      el.object3D.updateMatrixWorld(true);
+      const center = new THREE.Box3().setFromObject(numberMesh).getCenter(new THREE.Vector3());
+      const numberX = el.object3D.worldToLocal(center).x;
+      const mirror = new THREE.Group();
+      mirror.scale.x = -1;
+      mirror.position.x = 2 * numberX;
+      model.children.filter((node) => node !== numberMesh).forEach((node) => mirror.add(node));
+      model.add(mirror);
+    });
+  }
+});
+
 AFRAME.registerComponent('button-start',{
   init: function () {
     this.el.addEventListener('abuttonup', this.start);

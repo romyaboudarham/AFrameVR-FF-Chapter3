@@ -15,13 +15,13 @@
 </head>
 <body>
     <!-- 10454A -->
-    <a-scene light="defaultLightsEnabled: false" fog="type: linear; far: 20; near: 5; color: #0a1724;">
+    <a-scene gltf-model="dracoDecoderPath: https://www.gstatic.com/draco/versioned/decoders/1.5.6/" light="defaultLightsEnabled: false" fog="type: linear; far: 20; near: 5; color: #0a1724;">
         <a-assets>
             <a-asset-item id="optimerBoldFont" src="fonts/optimer_bold.typeface.json"></a-asset-item>
-            <a-asset-item response-type="arraybuffer" id="forest" src="https://ucarecdn.com/dc2359e1-3db7-46c0-b07a-f5cce01f3e44/forest.gltf"></a-asset-item>
-            <a-asset-item response-type="arraybuffer" id="ground" src="https://ucarecdn.com/97cfb37f-18f2-44ba-bafc-7440775cfa0f/ground.gltf"></a-asset-item>
-            <a-asset-item response-type="arraybuffer" id="underwater" src="https://ucarecdn.com/3807b2ff-0e0a-4548-a383-12a53a2446ff/underwater.gltf"></a-asset-item>
-            <a-asset-item response-type="arraybuffer" id="fishbowl" src="https://ucarecdn.com/f43c0afd-2dd2-4489-bce6-4036debfb567/fishbowl.gltf"></a-asset-item>
+            <a-asset-item response-type="arraybuffer" id="forest" src="models/forest.glb"></a-asset-item>
+            <a-asset-item response-type="arraybuffer" id="ground" src="models/ground.glb"></a-asset-item>
+            <a-asset-item response-type="arraybuffer" id="underwater" src="models/underwater.glb"></a-asset-item>
+            <a-asset-item response-type="arraybuffer" id="fishbowl" src="models/fishbowl.glb"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="bowl" src="https://ucarecdn.com/eb5d89b4-1d12-424f-9813-6ad4c8b0e4d9/bowl.gltf"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="arrow" src="https://ucarecdn.com/6ebf1cee-21b5-4724-986c-d6c6d94689f5/arrow.gltf"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="footprint-1" src="https://ucarecdn.com/ae3609eb-2171-4776-a74d-841a170d4b08/footprint1.gltf"></a-asset-item>
@@ -295,17 +295,17 @@
         </a-curve>
 
         <!-- STEP COUNT FOOTPRINT -->
-        <a-gltf-model src="#footprint-1" position=".6 3 -10"></a-gltf-model>
-        <a-gltf-model src="#footprint-2" position="-.6 3 -12"></a-gltf-model>
-        <a-gltf-model src="#footprint-3" position=".6 3 -14"></a-gltf-model>
-        <a-gltf-model src="#footprint-4" position="-.6 3 -16"></a-gltf-model>
-        <a-gltf-model src="#footprint-5" position=".6 3 -18"></a-gltf-model>
-        <a-gltf-model src="#footprint-6" position="-.6 3 -20"></a-gltf-model>
-        <a-gltf-model src="#footprint-7" position=".6 3 -22"></a-gltf-model>
-        <a-gltf-model src="#footprint-8" position="-.6 3 -24"></a-gltf-model>
-        <a-gltf-model src="#footprint-9" position=".6 3 -26"></a-gltf-model>
-        <a-gltf-model src="#footprint-10" position="-.6 3 -28"></a-gltf-model>
-        <a-gltf-model src="#footprint-11" position=".6 3 -31"></a-gltf-model>
+        <a-gltf-model src="#footprint-1" footprint="number: 1" position=".6 3 -10"></a-gltf-model>
+        <a-gltf-model src="#footprint-2" footprint="number: 2" position="-.6 3 -12"></a-gltf-model>
+        <a-gltf-model src="#footprint-3" footprint="number: 3" position=".6 3 -14"></a-gltf-model>
+        <a-gltf-model src="#footprint-4" footprint="number: 4" position="-.6 3 -16"></a-gltf-model>
+        <a-gltf-model src="#footprint-5" footprint="number: 5" position=".6 3 -18"></a-gltf-model>
+        <a-gltf-model src="#footprint-6" footprint="number: 6" position="-.6 3 -20"></a-gltf-model>
+        <a-gltf-model src="#footprint-7" footprint="number: 7" position=".6 3 -22"></a-gltf-model>
+        <a-gltf-model src="#footprint-8" footprint="number: 8" position="-.6 3 -24"></a-gltf-model>
+        <a-gltf-model src="#footprint-9" footprint="number: 9" position=".6 3 -26"></a-gltf-model>
+        <a-gltf-model src="#footprint-10" footprint="number: 10" position="-.6 3 -28"></a-gltf-model>
+        <a-gltf-model src="#footprint-11" footprint="number: 11" position=".6 3 -31"></a-gltf-model>
 
         <!-- TESTING CURVE -->
         <!-- <a-draw-curve curveref="#run" material="shader: line; color: red;"></a-draw-curve>
