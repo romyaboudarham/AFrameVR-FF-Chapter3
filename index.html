@@ -15,7 +15,7 @@
 </head>
 <body>
     <!-- 10454A -->
-    <a-scene gltf-model="dracoDecoderPath: https://www.gstatic.com/draco/versioned/decoders/1.5.6/" light="defaultLightsEnabled: false" fog="type: linear; far: 20; near: 5; color: #0a1724;">
+    <a-scene renderer="sortObjects: true" gltf-model="dracoDecoderPath: https://www.gstatic.com/draco/versioned/decoders/1.5.6/" light="defaultLightsEnabled: false" fog="type: linear; far: 20; near: 5; color: #0a1724;">
         <a-assets>
             <a-asset-item id="optimerBoldFont" src="fonts/optimer_bold.typeface.json"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="forest" src="models/forest.glb"></a-asset-item>
@@ -23,7 +23,6 @@
             <a-asset-item response-type="arraybuffer" id="underwater" src="models/underwater.glb"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="fishbowl" src="models/fishbowl.glb"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="bowl" src="https://ucarecdn.com/eb5d89b4-1d12-424f-9813-6ad4c8b0e4d9/bowl.gltf"></a-asset-item>
-            <a-asset-item response-type="arraybuffer" id="arrow" src="https://ucarecdn.com/6ebf1cee-21b5-4724-986c-d6c6d94689f5/arrow.gltf"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="footprint-1" src="https://ucarecdn.com/ae3609eb-2171-4776-a74d-841a170d4b08/footprint1.gltf"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="footprint-2" src="https://ucarecdn.com/2968288c-7383-4e22-9eeb-ec7be012fe1b/footprint2.gltf"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="footprint-3" src="https://ucarecdn.com/8f15d772-5f9c-42ce-981b-3e71b6abd941/footprint3.gltf"></a-asset-item>
@@ -193,8 +192,15 @@
         <a-sphere class="clickable" event-listener id="dot" color="#8aecff" position="0 6.1 14.5" radius="3" scale=".37 .37 .07" >
         </a-sphere>
 
-        <!-- Arrow -->
-        <a-gltf-model id="arrowID" src="#arrow" position="0 3.8 16" scale="4.2 4.2 4.2"></a-gltf-model>
+        <!-- Start dot ripple -->
+        <a-entity id="ripple" ripple="interval: 1400" position="0 6.1 14.5">
+            <a-ring radius-inner="1.12" radius-outer="1.22" segments-theta="64" material="shader: flat; color: #b98cff; transparent: true; opacity: 0; side: double; depthWrite: false; fog: false"
+                animation__scale="property: scale; from: 1 1 1; to: 2 2 2; dur: 1300; easing: easeOutSine; startEvents: drop"
+                animation__fade="property: material.opacity; from: 0.6; to: 0; dur: 1300; easing: easeOutSine; startEvents: drop"></a-ring>
+            <a-ring radius-inner="1.12" radius-outer="1.22" segments-theta="64" material="shader: flat; color: #b98cff; transparent: true; opacity: 0; side: double; depthWrite: false; fog: false"
+                animation__scale="property: scale; from: 1 1 1; to: 2 2 2; dur: 1300; easing: easeOutSine; startEvents: drop"
+                animation__fade="property: material.opacity; from: 0.6; to: 0; dur: 1300; easing: easeOutSine; startEvents: drop"></a-ring>
+        </a-entity>
 
         <!-- Instruction Text -->
         <a-entity id="instruction" position="-3.6 2.6 16.5" scale="1 1 1"

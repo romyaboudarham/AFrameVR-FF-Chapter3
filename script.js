@@ -3,7 +3,7 @@ let countdown = document.getElementById('countdown');
 let rig = document.getElementById('rig');
 let camera = document.getElementById('camera');
 let cursor = document.getElementById('cursor');
-let arrow = document.getElementById('arrowID');
+let ripple = document.getElementById('ripple');
 let stepCount = document.getElementById('step-count');
 let ground = document.getElementById('groundID');
 let underwater = document.getElementById('underwaterID');
@@ -31,7 +31,7 @@ let footprint11 = document.getElementById('footprint11');
 
 // Set to false to start on the left foot: footprints swap sides and each foot
 // is mirrored. The number mesh is left unmirrored so it still reads correctly.
-const startRightFoot = true;
+const startRightFoot = false;
 
 AFRAME.registerComponent('footprint', {
   schema: { number: { type: 'int' } },
@@ -58,6 +58,21 @@ AFRAME.registerComponent('footprint', {
   }
 });
 
+// Fires 'drop' on the child rings one at a time, every interval, so each ring's
+// animation (which starts on that event) finishes before the next ring begins.
+AFRAME.registerComponent('ripple', {
+  schema: { interval: { type: 'int', default: 1400 } },
+  init: function () {
+    let next = 0;
+    this.timer = setInterval(() => {
+      const rings = this.el.children;
+      rings[next % rings.length].emit('drop', null, false);
+      next++;
+    }, this.data.interval);
+  },
+  remove: function () { clearInterval(this.timer); }
+});
+
 AFRAME.registerComponent('button-start',{
   init: function () {
     this.el.addEventListener('abuttonup', this.start);
@@ -70,7 +85,7 @@ AFRAME.registerComponent('button-start',{
     subtitlesCountdown();
     endFadeOutCountdown();
     cursor.setAttribute('visible', 'false');
-    arrow.setAttribute('visible', 'false');
+    ripple.setAttribute('visible', 'false');
     countdown.dispatchEvent(new CustomEvent('countdown-begin'))
     countdown.setAttribute('visible', 'true');
     disableDot();
@@ -84,7 +99,7 @@ AFRAME.registerComponent("event-listener", {
           subtitlesCountdown();
           endFadeOutCountdown();
           cursor.setAttribute('visible', 'false');
-          arrow.setAttribute('visible', 'false');
+          ripple.setAttribute('visible', 'false');
           countdown.dispatchEvent(new CustomEvent('countdown-begin'))
           countdown.setAttribute('visible', 'true');
           disableDot();
@@ -184,7 +199,7 @@ function restart() {
   document.getElementById('countdown').setAttribute('text-geometry', 'value', '3');
   countdown.setAttribute('visible', 'false');
   cursor.setAttribute('visible', 'true');
-  arrow.setAttribute('visible', 'true');
+  ripple.setAttribute('visible', 'true');
   pathLight.setAttribute('visible', 'true');
   ground.setAttribute('visible', 'true');
   endFader.setAttribute('material', 'opacity', '0.0');
