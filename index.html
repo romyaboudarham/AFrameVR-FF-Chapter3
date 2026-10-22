@@ -22,6 +22,7 @@
             <a-asset-item response-type="arraybuffer" id="ground" src="models/ground.glb"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="underwater" src="models/underwater.glb"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="fishbowl" src="models/fishbowl.glb"></a-asset-item>
+            <a-asset-item response-type="arraybuffer" id="egg" src="models/egg.glb"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="bowl" src="https://ucarecdn.com/eb5d89b4-1d12-424f-9813-6ad4c8b0e4d9/bowl.gltf"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="footprint-1" src="https://ucarecdn.com/ae3609eb-2171-4776-a74d-841a170d4b08/footprint1.gltf"></a-asset-item>
             <a-asset-item response-type="arraybuffer" id="footprint-2" src="https://ucarecdn.com/2968288c-7383-4e22-9eeb-ec7be012fe1b/footprint2.gltf"></a-asset-item>
@@ -71,7 +72,7 @@
                 bevelThickness: 0.02; 
                 value: It's quiet down here" 
             material=
-                "color: white; opacity: 0.0;"
+                "color: white; opacity: 0.0; transparent: true; depthWrite: false;"
             updater=""
             animation="property: material.opacity; from: 0.0; to: 1.0 dur: 500; startEvents: animate"
             animation__fadeOut="property: material.opacity; from: 1.0; to: 0.0 dur: 500; startEvents: animate_fadeOut">
@@ -86,7 +87,7 @@
                 bevelThickness: 0.02; 
                 value: I think I'll stay a bit"
             material=
-                "color: white; opacity: 0.0;"
+                "color: white; opacity: 0.0; transparent: true; depthWrite: false;"
             updater=""
             animation="property: material.opacity; from: 0.0; to: 1.0 dur: 500; startEvents: animate"
             animation__fadeOut="property: material.opacity; from: 1.0; to: 0.0 dur: 500; startEvents: animate_fadeOut">
@@ -94,8 +95,14 @@
 
         <!-- Camera -->
         <!-- "-2 -7 -31" -->
-        <a-entity id="rig" position="0 1.6 24" rotation="0 0 0">
-            <a-entity id="camera" camera look-controls>
+        <a-entity id="rig" position="0 1.6 24" rotation="0 0 0" fall-fade="fader: #fall-fader">
+            <a-entity id="camera" camera="near: 0.1; far: 1000" look-controls>
+                <!-- Fall Fade Sphere: hides the drop into the water -->
+                <a-sphere id="fall-fader" radius="0.3" render-order="1000"
+                    material="shader: flat; color: #0a1724; opacity: 0.0; side: back; transparent: true; depthTest: false; depthWrite: false; fog: false"
+                    animation__out="property: material.opacity; from: 0.0; to: 1.0; dur: 800; easing: easeInQuad; startEvents: fadeout"
+                    animation__in="property: material.opacity; from: 1.0; to: 0.0; dur: 1500; easing: easeOutQuad; startEvents: fadein">
+                </a-sphere>
                 <a-entity id="end-text" position="-.6 0 -1.5" scale=".5 .5 .5"
                 text-geometry=
                     "font: #optimerBoldFont;
@@ -105,7 +112,7 @@
                     bevelThickness: 0.02; 
                     value: The End"
                 material=
-                    "color: white; opacity: 0.0;"
+                    "color: white; opacity: 0.0; transparent: true; depthWrite: false;"
                 updater=""
                 animation="property: material.opacity; from: 0.0; to: 1.0 dur: 500; startEvents: animate">
             </a-entity>
@@ -126,21 +133,33 @@
                                     from: 0 0 0;
                                     to: 1 1 1;
                                     dur: 500">
-                    <a-entity sound="src: #Ch3-audio; volume: 3" restart-chapter></a-entity>
+                    <a-entity sound="src: #Ch3-audio; volume: 1; positional: false" restart-chapter></a-entity>
                 </a-entity>
             </a-entity>
             <!-- Ending Fade Sphere -->
             <a-sphere id="end-fader" position="0 2 0" radius="4" 
-                material="shader:flat; color: black; opacity: 0.0; side: back" 
+                material="shader:flat; color: black; opacity: 0.0; side: back; transparent: true; depthWrite: false" render-order="999"
                 animation="property: material.opacity; from: 0.0; to: 1.0 dur: 1400; startEvents: animate">
             </a-sphere>
             <!-- FISHBOWL -->
             <!-- "0 -.6 -.3" -->
-            <a-gltf-model visible="true" id="fishbowlID" src="#fishbowl" rotation="0 180 0" position="0 .8 -.5" scale="1 1 1"></a-gltf-model>    
+            <a-gltf-model visible="true" id="fishbowlID" src="#fishbowl" transparency-fix="firstMaterials: blinn3" rotation="0 180 0" position="0 .6 -.5" scale="1 1 1"></a-gltf-model>    
         </a-entity>
 
         <!-- EMPTY BOWL -->
         <a-gltf-model id="bowlID" src="#bowl" rotation="0 2.541067821405201 0" position="-4.62182 -16.35052 -36.71127" scale="" gltf-model="https://ucarecdn.com/eb5d89b4-1d12-424f-9813-6ad4c8b0e4d9/bowl.gltf"></a-gltf-model>  
+
+        <!-- STARS: shown once underwater, seen through the hole in the ground -->
+        <a-entity id="starfield" starfield visible="false" position="0 -8.4 -31"></a-entity>
+
+        <!-- GLIMMERS: drifting motes of light in the distance, shown once underwater -->
+        <a-entity id="glimmers" glimmers visible="false" position="0 -8.4 -31"></a-entity>
+
+        <!-- WATER VEIL: faint tint across the pond opening, seen from underwater -->
+        <a-entity id="water-veil" water-veil visible="false" position="0.35 -0.7 -36.2"></a-entity>
+
+        <!-- EGG -->
+        <a-gltf-model id="eggID" src="#egg" double-sided position="6.6 -16.37 -29.5" rotation="0 0 0" scale="0.07 0.07 0.07"></a-gltf-model>
 
         <a-sky id="skyID" material="shader: gradientshader;
             topColor:  #000;
@@ -153,7 +172,7 @@
         <!-- Ground -->
         <a-entity id="groundID" gltf-model="#ground"></a-entity>
         <!-- Underwater -->
-        <a-gltf-model id="underwaterID" gltf-model="#underwater"></a-gltf-model>
+        <a-gltf-model id="underwaterID" gltf-model="#underwater" transparency-fix="firstMaterials: blinn3"></a-gltf-model>
 
         <!-- Light -->
         <a-entity id="pathLight" light="type: directional; 
@@ -161,6 +180,9 @@
                 castShadow:  true; 
                 shadowCameraRight: 100;
                 shadowCameraLeft: -100;
+                shadowBias: -0.002;
+                shadowMapWidth: 1024;
+                shadowMapHeight: 1024;
                 color: #c16ffb;"
             position="0 1.986 -30">
         </a-entity>
