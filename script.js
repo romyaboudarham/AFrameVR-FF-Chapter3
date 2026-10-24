@@ -334,13 +334,14 @@ AFRAME.registerComponent('fall-fade', {
   schema: {
     fader: {type: 'selector'},
     startZ: {default: -29.6}, // just before the drop on #fall
-    underwaterY: {default: -3}
+    underwaterY: {default: -3},
+    fadeInDelay: {default: 500} // ms to hold on blue after landing
   },
   init: function () {
     this.fading = false;
     this.underwater = false;
     this.el.addEventListener('movingended', () => {
-      if (this.fading) this.data.fader.emit('fadein');
+      if (this.fading) this.fadeInTimer = setTimeout(() => this.data.fader.emit('fadein'), this.data.fadeInDelay);
     });
   },
   tick: function () {
@@ -357,6 +358,7 @@ AFRAME.registerComponent('fall-fade', {
     }
   },
   reset: function () {
+    clearTimeout(this.fadeInTimer);
     this.fading = false;
     this.underwater = false;
     this.data.fader.setAttribute('material', 'opacity', 0);

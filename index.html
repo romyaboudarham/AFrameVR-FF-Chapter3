@@ -63,36 +63,6 @@
         <!-- <a-entity oculus-touch-controls="hand: left" button-start></a-entity>
         <a-entity oculus-touch-controls="hand: right" button-start></a-entity> -->
 
-        <a-entity id="quiet-text" position="-2.1 -8.5 -36" scale=".5 .5 .5"
-            text-geometry=
-                "font: #optimerBoldFont;
-                height: 0.1; 
-                bevelEnabled: true; 
-                bevelSize: 0.02;
-                bevelThickness: 0.02; 
-                value: It's quiet down here" 
-            material=
-                "color: white; opacity: 0.0; transparent: true; depthWrite: false;"
-            updater=""
-            animation="property: material.opacity; from: 0.0; to: 1.0 dur: 500; startEvents: animate"
-            animation__fadeOut="property: material.opacity; from: 1.0; to: 0.0 dur: 500; startEvents: animate_fadeOut">
-        </a-entity>
-
-        <a-entity id="stay-text" position="-2.1 -9.2 -36" scale=".5 .5 .5"
-            text-geometry=
-                "font: #optimerBoldFont;
-                height: 0.1; 
-                bevelEnabled: true; 
-                bevelSize: 0.02;
-                bevelThickness: 0.02; 
-                value: I think I'll stay a bit"
-            material=
-                "color: white; opacity: 0.0; transparent: true; depthWrite: false;"
-            updater=""
-            animation="property: material.opacity; from: 0.0; to: 1.0 dur: 500; startEvents: animate"
-            animation__fadeOut="property: material.opacity; from: 1.0; to: 0.0 dur: 500; startEvents: animate_fadeOut">
-        </a-entity>
-
         <!-- Camera -->
         <!-- "-2 -7 -31" -->
         <a-entity id="rig" position="0 1.6 24" rotation="0 0 0" fall-fade="fader: #fall-fader">
@@ -116,6 +86,38 @@
                 updater=""
                 animation="property: material.opacity; from: 0.0; to: 1.0 dur: 500; startEvents: animate">
             </a-entity>
+                <!-- Subtitles: follow the camera; offsets match their old spot as seen from the landing point (0 -10 -31) -->
+                <a-entity id="quiet-text" position="-2.1 1.05 -5" scale=".5 .5 .5"
+                    text-geometry=
+                        "font: #optimerBoldFont;
+                        height: 0.1; 
+                        bevelEnabled: true; 
+                        bevelSize: 0.02;
+                        bevelThickness: 0.02; 
+                        value: It's quiet down here" 
+                    material=
+                        "color: white; opacity: 0.0; transparent: true; depthWrite: false; depthTest: false;"
+                    render-order="900"
+                    updater=""
+                    animation="property: material.opacity; from: 0.0; to: 1.0 dur: 500; startEvents: animate"
+                    animation__fadeOut="property: material.opacity; from: 1.0; to: 0.0 dur: 500; startEvents: animate_fadeOut">
+                </a-entity>
+
+                <a-entity id="stay-text" position="-2.1 0.35 -5" scale=".5 .5 .5"
+                    text-geometry=
+                        "font: #optimerBoldFont;
+                        height: 0.1; 
+                        bevelEnabled: true; 
+                        bevelSize: 0.02;
+                        bevelThickness: 0.02; 
+                        value: I think I'll stay a bit"
+                    material=
+                        "color: white; opacity: 0.0; transparent: true; depthWrite: false; depthTest: false;"
+                    render-order="900"
+                    updater=""
+                    animation="property: material.opacity; from: 0.0; to: 1.0 dur: 500; startEvents: animate"
+                    animation__fadeOut="property: material.opacity; from: 1.0; to: 0.0 dur: 500; startEvents: animate_fadeOut">
+                </a-entity>
                 <!-- Cursor -->
                 <a-entity cursor="fuse: true; fuseTimeout: 1000"
                         id="cursor"
@@ -143,7 +145,7 @@
             </a-sphere>
             <!-- FISHBOWL -->
             <!-- "0 -.6 -.3" -->
-            <a-gltf-model visible="true" id="fishbowlID" src="#fishbowl" transparency-fix="firstMaterials: blinn3" rotation="0 180 0" position="0 .6 -.5" scale="1 1 1"></a-gltf-model>    
+            <a-gltf-model visible="true" id="fishbowlID" src="#fishbowl" transparency-fix="firstMaterials: blinn3" rotation="0 180 0" position="0 .5 -.5" scale="1 1 1"></a-gltf-model>    
         </a-entity>
 
         <!-- EMPTY BOWL -->
