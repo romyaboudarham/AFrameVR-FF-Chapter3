@@ -335,7 +335,7 @@ AFRAME.registerComponent('fall-fade', {
     fader: {type: 'selector'},
     startZ: {default: -29.6}, // just before the drop on #fall
     underwaterY: {default: -3},
-    fadeInDelay: {default: 500} // ms to hold on blue after landing
+    fadeInDelay: {default: 1100} // ms to hold on blue after landing
   },
   init: function () {
     this.fading = false;
